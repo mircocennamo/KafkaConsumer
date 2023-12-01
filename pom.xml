@@ -82,6 +82,40 @@
             <version>${spring-kafka.version}</version>
             <scope>test</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.reporter2</groupId>
+            <artifactId>zipkin-reporter-brave</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-zipkin</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-observation</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.contrib.brave/brave-kafka-interceptor -->
+        <dependency>
+            <groupId>io.zipkin.contrib.brave</groupId>
+            <artifactId>brave-kafka-interceptor</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>

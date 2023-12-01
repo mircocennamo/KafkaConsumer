@@ -1,7 +1,9 @@
 package com.avanade.consumer.kakfa.listenerBatch;
 
+import com.avanade.consumer.kakfa.service.MessageService;
 import com.avanade.model.Rilevazione;
 import com.hazelcast.core.HazelcastInstance;
+import io.micrometer.observation.annotation.Observed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,8 +23,7 @@ import java.util.concurrent.Executor;
 @Slf4j
 public class ReceiverBatch {
 
-    @Autowired
-    private HazelcastInstance hazelcastInstance;
+
 
     //private ExecutorService executorService = Executors.newFixedThreadPool(30);
 
@@ -33,13 +34,13 @@ public class ReceiverBatch {
     @Autowired
     private Executor asyncTaskExecutor;
 
+    @Autowired
+    private MessageService messageService;
 
-    private static final String TARGHE = "TARGHE";
 
-    private ConcurrentMap<String,String> retrieveTargheMap() {
-        return hazelcastInstance.getMap(TARGHE);
-    }
 
+    @Observed(name = "SenderAsyncCallBack",
+            contextualName = "receiveBatch")
 
     @KafkaListener(id = "consumer-batch",topics = "${spring.kafka.consumer.topic}",
             properties = {"spring.json.value.default.type=com.avanade.model.Rilevazione"},
@@ -55,7 +56,7 @@ public class ReceiverBatch {
 
 
         payloads.stream().forEach(payload -> {
-            asyncTaskExecutor.execute(() -> loggingInfo(payload, timestamp,partition));
+            asyncTaskExecutor.execute(() -> messageService.loggingInfo(payload, timestamp,partition));
         });
 
         log.debug("all the batch messages are consumed");
@@ -67,13 +68,4 @@ public class ReceiverBatch {
     }
 
 
-    @Async
-    private void loggingInfo(Rilevazione payload,  long timestamp,int partition) {
-         if (log.isDebugEnabled()) {
-                log.debug("Thread {} received  message {} at {} on partition {} ",
-                        Thread.currentThread(), payload.toString(), new Date(timestamp),partition);
-            }
-        String value = retrieveTargheMap().get(payload.getLicensePlate());
-
-     }
 }
