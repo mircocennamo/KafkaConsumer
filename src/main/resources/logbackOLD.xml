@@ -1,0 +1,87 @@
+<configuration>
+    <property name="LOGS" value="./logs" />
+
+
+
+   <!-- <appender name="RollingFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/consumer.log</file>
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <fileNamePattern>${LOGS}/archived/consumer-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>-->
+
+
+
+    <appender name="RollingFileBatch"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/consumerBatch.log</file>
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>${LOGS}/archived/consumerBatch-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+
+  <!--  <logger name="com.avanade.listener" level="trace" additivity="false">
+        <appender-ref ref="asyncRollingFile" />
+    </logger>-->
+
+
+    <logger name="com.avanade" level="trace" additivity="false">
+        <appender-ref ref="asyncRollingFileBatch" />
+    </logger>
+
+
+
+     <logger name="org.springframework.kafka" level="debug" additivity="false">
+            <appender-ref ref="asyncRollingFileBatch" />
+        </logger>
+
+
+  <!--   <appender name="asyncRollingFile" class="ch.qos.logback.classic.AsyncAppender">
+            <appender-ref ref="RollingFile"/>
+            <discardingThreshold>0</discardingThreshold>
+            <queueSize>256</queueSize>
+            <neverBlock>false</neverBlock>
+            <includeCallerData>false</includeCallerData>
+        </appender>-->
+
+
+    <appender name="asyncRollingFileBatch" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="RollingFileBatch"/>
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <neverBlock>false</neverBlock>
+        <includeCallerData>false</includeCallerData>
+    </appender>
+
+    <root level="WARN">
+     <!--   <appender-ref ref="asyncRollingFile" />-->
+        <appender-ref ref="asyncRollingFileBatch" />
+    </root>
+
+</configuration>
