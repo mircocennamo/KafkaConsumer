@@ -83,8 +83,8 @@ public class KafkaConsumerConfig {
         props.put("zipkin.http.endpoint", "http://127.0.0.1:9411/api/v2/spans");
         props.put("zipkin.sender.type", "HTTP");
         props.put("zipkin.encoding", "JSON");
-        props.put("zipkin.remote.service.name", "scntt");
-        props.put("zipkin.local.service.name", "scntt");
+        props.put("zipkin.remote.service.name", "scntt-kafka");
+        props.put("zipkin.local.service.name", "scntt-kafka");
         props.put("zipkin.trace.id.128bit.enabled", "true");
         props.put("zipkin.sampler.rate", "1.0F");
 
