@@ -11,7 +11,7 @@
         <connection-timeout>5000</connection-timeout>
         <cluster-members>
             <address>localhost:5701</address>
-            <address>localhost:5702</address>
+            <!--<address>localhost:5702</address>-->
         </cluster-members>
     </network>
 
@@ -36,4 +36,10 @@
     <load-balancer type="round-robin"/>
 
     <backup-ack-to-client-enabled>true</backup-ack-to-client-enabled>
+
+  <!--  <serialization>
+        <serializers>
+            <serializer class-name="it.nsis.serializer.RilevazioneSerializer" type-class="it.nsis.model.Rilevazione"></serializer>
+        </serializers>
+    </serialization> -->
 </hazelcast-client>

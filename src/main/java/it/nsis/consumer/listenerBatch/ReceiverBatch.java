@@ -1,11 +1,11 @@
-package com.avanade.consumer.kakfa.listenerBatch;
+package it.nsis.consumer.kakfa.listenerBatch;
 
 import brave.Span;
 import brave.Tracer;
-import com.avanade.TagConst;
-import com.avanade.consumer.kakfa.service.MessageService;
-import com.avanade.model.Rilevazione;
+import it.nsis.consumer.kakfa.service.MessageService;
+import it.nsis.model.Rilevazione;
 import io.micrometer.tracing.annotation.NewSpan;
+import it.nsis.utility.TagConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -44,15 +44,15 @@ public class ReceiverBatch {
 
     @NewSpan(name = "receiveBatch")
     @KafkaListener(id = "consumer-batch",topics = "${spring.kafka.consumer.topic}",
-            properties = {"spring.json.value.default.type=com.avanade.model.Rilevazione"},
-            groupId = "test-batch-group",
+            properties = {"spring.json.value.default.type=it.nsis.model.Rilevazione"},
+            groupId = "scntt-batch-group",
             concurrency = "4")
     public void receiveBatch(@Payload List<Rilevazione> payloads,
-                        @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long timestamp ,
+                        @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long timestampRiceivedMessage ,
                         @Header(KafkaHeaders.RECEIVED_PARTITION) int partition
     ) {
         log.debug("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
-        log.debug("Starting the process to recieve batch messages");
+        log.debug("Starting the process to receive batch messages");
         log.debug("process to receive {} messages " , payloads.size());
 
         Span span = this.tracer.currentSpan();
@@ -61,7 +61,7 @@ public class ReceiverBatch {
 
 
         payloads.stream().forEach(payload -> {
-            asyncTaskExecutor.execute(() -> messageService.elaborazioneMessaggio(payload, timestamp,partition));
+            asyncTaskExecutor.execute(() -> messageService.elaborazioneMessaggio(payload, timestampRiceivedMessage,partition));
         });
 
         log.debug("all the batch messages are consumed");

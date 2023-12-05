@@ -23,7 +23,7 @@
         <lombok.version>1.18.30</lombok.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <start-class>com.avanade.SpringKafkaConsumerApplication</start-class>
+        <start-class>it.nsis.consumer.SpringKafkaConsumerApplication</start-class>
         <hazelcast.version>5.3.6</hazelcast.version>
     </properties>
 
@@ -141,6 +141,11 @@
             <artifactId>hazelcast-spring</artifactId>
             <version>${hazelcast.version}</version>
         </dependency>
+        <dependency>
+            <groupId>it.nsis</groupId>
+            <artifactId>SCNTT-Common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 
@@ -153,7 +158,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.avanade.SpringKafkaConsumerApplication</mainClass>
+                    <mainClass>it.nsis.consumer.SpringKafkaConsumerApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>

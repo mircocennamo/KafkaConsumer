@@ -1,4 +1,4 @@
-package com.avanade.consumer.kakfa.listener;
+package it.nsis.consumer.kakfa.listener;
 /*
 import com.avanade.model.Rilevazione;
 import lombok.extern.slf4j.Slf4j;

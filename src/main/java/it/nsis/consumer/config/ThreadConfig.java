@@ -1,4 +1,4 @@
-package com.avanade.consumer.kakfa.config;
+package it.nsis.consumer.kakfa.config;
 
 import org.apache.tomcat.util.threads.VirtualThreadExecutor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
