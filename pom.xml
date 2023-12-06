@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.avanade.consumer.kafka</groupId>
-    <artifactId>kafka-consumer</artifactId>
+    <groupId>it.nsis.scntt.consumer.kafka</groupId>
+    <artifactId>SCNTT-kafka-consumer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>spring-boot-kafka-consumer</name>
-    <description>Demo project Consumer for Spring Boot</description>
+    <name>SCNTT-kafka-consumer</name>
+    <description>Consumer Kafka for SCNTT</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -23,7 +23,7 @@
         <lombok.version>1.18.30</lombok.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <start-class>it.nsis.consumer.SpringKafkaConsumerApplication</start-class>
+        <start-class>it.nsis.consumer.ScnttKafkaConsumer</start-class>
         <hazelcast.version>5.3.6</hazelcast.version>
     </properties>
 
@@ -158,7 +158,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>it.nsis.consumer.SpringKafkaConsumerApplication</mainClass>
+                    <mainClass>it.nsis.consumer.ScnttKafkaConsumer</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>

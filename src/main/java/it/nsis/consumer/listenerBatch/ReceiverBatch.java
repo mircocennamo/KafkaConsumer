@@ -42,11 +42,11 @@ public class ReceiverBatch {
 
 
 
-    @NewSpan(name = "receiveBatch")
-    @KafkaListener(id = "consumer-batch",topics = "${spring.kafka.consumer.topic}",
+    @NewSpan(name = "SCNTT-Consumer")
+    @KafkaListener(id = "${spring.kafka.consumer.id}",topics = "${spring.kafka.consumer.topic}",
             properties = {"spring.json.value.default.type=it.nsis.model.Rilevazione"},
-            groupId = "scntt-batch-group",
-            concurrency = "4")
+            groupId = "${spring.kafka.consumer.group-id}",
+            concurrency = "${spring.kafka.consumer.concurrency}")
     public void receiveBatch(@Payload List<Rilevazione> payloads,
                         @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long timestampRiceivedMessage ,
                         @Header(KafkaHeaders.RECEIVED_PARTITION) int partition
