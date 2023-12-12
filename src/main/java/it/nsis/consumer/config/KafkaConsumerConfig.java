@@ -41,8 +41,30 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-   // @Value("${spring.kafka.consumer.group-id}")
-   // private String groupId;
+    @Value("${group.id.config}")
+    private String groupIdConfig;
+
+    @Value("${allow.auto.create.topics.config}")
+    private String autoCreateTopics;
+
+    @Value("${max.poll.records.config}")
+    private String maxPollRecords;
+
+
+
+    @Value("${spring.kafka.consumer.auto-offset-reset}")
+    private String autoOffsetResetConfig;
+
+    @Value("${fetch.max.wait.ms.config}")
+    private String fetchMaxWaitMs;
+
+    @Value("${spring.kafka.consumer.group-id}")
+    private String consumerGroupId;
+
+
+    @Value("${zipkin.http.endpoint}")
+    private String zipkinHttpEndPoint;
+
 
    // @Value(value = "${kafka.backoff.interval}")
    // private Long interval;
@@ -64,9 +86,7 @@ public class KafkaConsumerConfig {
         props.put(
                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 bootstrapServers);
-      //  props.put(
-        //        ConsumerConfig.GROUP_ID_CONFIG,
-          //      groupId);
+
         props.put(
                 ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
                 StringDeserializer.class);
@@ -74,15 +94,15 @@ public class KafkaConsumerConfig {
                 ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
                 JsonDeserializer.class);
 
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "batch");
-        props.put(ConsumerConfig.ALLOW_AUTO_CREATE_TOPICS_CONFIG, "false");
-        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "200");
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, "1000");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "scntt-batch-group");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupIdConfig);
+        props.put(ConsumerConfig.ALLOW_AUTO_CREATE_TOPICS_CONFIG, autoCreateTopics);
+        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecords);
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, autoOffsetResetConfig);
+        props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, fetchMaxWaitMs);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroupId);
 
         props.put(ConsumerConfig.INTERCEPTOR_CLASSES_CONFIG, TracingConsumerInterceptor.class.getName());
-        props.put("zipkin.http.endpoint", "http://127.0.0.1:9411/api/v2/spans");
+        props.put("zipkin.http.endpoint", zipkinHttpEndPoint);
         props.put("zipkin.sender.type", "HTTP");
         props.put("zipkin.encoding", "JSON");
         props.put("zipkin.remote.service.name", "scntt-kafka");

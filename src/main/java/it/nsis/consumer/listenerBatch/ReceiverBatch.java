@@ -46,7 +46,7 @@ public class ReceiverBatch {
     @KafkaListener(id = "${spring.kafka.consumer.id}",topics = "${spring.kafka.consumer.topic}",
             properties = {"spring.json.value.default.type=it.nsis.model.Rilevazione"},
             groupId = "${spring.kafka.consumer.group-id}",
-            concurrency = "${spring.kafka.consumer.concurrency}")
+            concurrency = "${spring.kafka.consumer.concurrency}",autoStartup = "${consumer.auto.startup}")
     public void receiveBatch(@Payload List<Rilevazione> payloads,
                         @Header(KafkaHeaders.RECEIVED_TIMESTAMP) long timestampRiceivedMessage ,
                         @Header(KafkaHeaders.RECEIVED_PARTITION) int partition

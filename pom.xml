@@ -25,6 +25,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <start-class>it.nsis.consumer.ScnttKafkaConsumer</start-class>
         <hazelcast.version>5.3.6</hazelcast.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.3.0</springdoc-openapi-starter-webmvc-ui.version>
     </properties>
 
 
@@ -145,6 +146,11 @@
             <groupId>it.nsis</groupId>
             <artifactId>SCNTT-Common</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
         </dependency>
     </dependencies>
 

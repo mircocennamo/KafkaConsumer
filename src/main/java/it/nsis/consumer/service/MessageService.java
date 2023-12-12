@@ -7,6 +7,7 @@ import it.nsis.model.Rilevazione;
 import com.hazelcast.core.HazelcastInstance;
 import io.micrometer.tracing.annotation.ContinueSpan;
 import io.micrometer.tracing.annotation.SpanTag;
+import it.nsis.model.Status;
 import it.nsis.utility.TagConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,17 @@ public class MessageService {
     private HazelcastInstance hazelcastInstance;
 
     private static final String TARGHE = "TARGHE";
+    private static final String STATUS_TARGHE = "STATUS";
 
     private ConcurrentMap<String, Rilevazione> retrieveTargheMap() {
         return hazelcastInstance.getMap(TARGHE);
     }
+
+    private ConcurrentMap<String, Status> retrieveStatusTargheMap() {
+        return hazelcastInstance.getMap(STATUS_TARGHE);
+    }
+
+
 
     @Autowired
     private Tracer tracer;
@@ -81,5 +89,15 @@ public class MessageService {
         payload.setFound(true);
         payload.setUpdateAt(new Date());
         retrieveTargheMap().put(payload.getLicensePlate(),payload);
+    }
+
+
+    @NewSpan(name="checkStatusCacheTarghe")
+    public Status checkStatusCacheTarghe() {
+        if (log.isDebugEnabled()) {
+            log.debug("Thread {} checkStatusCacheTarghe   ", Thread.currentThread());
+        }
+
+        return retrieveStatusTargheMap().get("TARGHE");
     }
 }
