@@ -127,6 +127,10 @@
             <artifactId>brave-kafka-interceptor</artifactId>
             <version>0.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.zipkin.reporter2</groupId>
+            <artifactId>zipkin-sender-kafka</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -141,6 +145,10 @@
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast-spring</artifactId>
             <version>${hazelcast.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.reporter2</groupId>
+            <artifactId>zipkin-sender-kafka</artifactId>
         </dependency>
         <dependency>
             <groupId>it.nsis</groupId>

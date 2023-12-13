@@ -2,19 +2,17 @@ package it.nsis.consumer.kakfa.service;
 
 import brave.Span;
 import brave.Tracer;
-import io.micrometer.tracing.annotation.NewSpan;
-import it.nsis.model.Rilevazione;
 import com.hazelcast.core.HazelcastInstance;
 import io.micrometer.tracing.annotation.ContinueSpan;
+import io.micrometer.tracing.annotation.NewSpan;
 import io.micrometer.tracing.annotation.SpanTag;
+import it.nsis.model.Rilevazione;
 import it.nsis.model.Status;
 import it.nsis.utility.TagConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.ConcurrentMap;
 
@@ -75,7 +73,7 @@ public class MessageService {
 
     }
 
-    @NewSpan(name = "invioNSIS")
+    @ContinueSpan
     public void invioNSIS(Rilevazione payload) {
         if (log.isDebugEnabled()) {
             log.debug("Thread {} invioNSIS  message {} ",
