@@ -54,7 +54,7 @@ public class MessageService {
     @ContinueSpan
     public void elaborazioneMessaggio(@SpanTag("consumer.payload") Rilevazione payload, long timestampRiceivedMessage, int partition) {
         if (log.isDebugEnabled()) {
-            log.debug("Thread {} received  message {} at {} on partition {} ",
+            log.debug("Thread {} elaborazioneMessaggio {} at {} on partition {} ",
                     Thread.currentThread(), payload.toString(), new Date(timestampRiceivedMessage), partition);
         }
         Span span = this.tracer.currentSpan();

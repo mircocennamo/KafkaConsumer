@@ -58,7 +58,7 @@ public class ReceiverBatch {
         Span span = this.tracer.currentSpan();
         span.tag(TagConst.NUMERO_MESSAGGI_PRELEVATI, String.valueOf(payloads.size()));
         span.tag(TagConst.PARTIZIONE_LETTA, String.valueOf(partition));
-
+        log.debug("Thread for receiveBatch {} " , Thread.currentThread());
 
         payloads.stream().forEach(payload -> {
             asyncTaskExecutor.execute(() -> messageService.elaborazioneMessaggio(payload, timestampRiceivedMessage,partition));

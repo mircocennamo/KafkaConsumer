@@ -2,13 +2,10 @@ package it.nsis.consumer.resources;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.nsis.model.EnumStatus;
-import it.nsis.model.Rilevazione;
 import it.nsis.model.Status;
-import it.nsis.viewmodel.RilevazioneResponseVm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ConcurrentMap;
+import java.util.Date;
 
 /**
  * @author mirco.cennamo on 11/12/2023
@@ -47,7 +44,7 @@ public class ConsumerResource {
             @ApiResponse(responseCode = "500", description = "Error in start consumer",
                     content = @Content) })
     @GetMapping(path = "scntt/consumer/start")
-    public ResponseEntity<String> startConsumer(){
+    public ResponseEntity<StatusResponse> startConsumer(){
         log.debug("called startConsumer ");
         MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(listenerId);
         Status status = messageService.checkStatusCacheTarghe();
@@ -56,12 +53,11 @@ public class ConsumerResource {
         ){
             listenerContainer.start();
             log.info("consumer started  :: exit");
-            return new ResponseEntity<>("CONSUMER STARTED", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusResponse("CONSUMER STARTED",new Date()), HttpStatus.OK);
 
         }else {
-            log.debug("stato cache targhe {}  o lo stato dei consumer isRunning {} non permette lo start dei consumer ", status.getStatus(),listenerContainer.isRunning());
             log.info("consumer already running  or status cache in incompatible mode:: exit");
-            return new ResponseEntity<>("CONSUMER ALREADY STARTED OR CACHE IN INCOMPATIBLE MODE", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusResponse("CONSUMER ALREADY STARTED OR CACHE IN INCOMPATIBLE MODE",new Date()), HttpStatus.OK);
        }
 
     }
@@ -73,12 +69,12 @@ public class ConsumerResource {
             @ApiResponse(responseCode = "500", description = "Error in start consumer",
                     content = @Content) })
     @GetMapping(path = "scntt/consumer/forcedStart")
-    public ResponseEntity<String> forcedStartConsumer(){
+    public ResponseEntity<StatusResponse> forcedStartConsumer(){
         MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(listenerId);
         log.debug("called forcedStartConsumer ");
         listenerContainer.start();
         log.info("consumer started in forced mode :: exit");
-        return new ResponseEntity<>("CONSUMER STARTED IN FORCED MODE", HttpStatus.OK);
+        return new ResponseEntity<>(new StatusResponse("CONSUMER STARTED IN FORCED MODE",new Date()), HttpStatus.OK);
     }
 
     @Operation(summary = "stop consumer with check status cache")
@@ -88,15 +84,15 @@ public class ConsumerResource {
             @ApiResponse(responseCode = "500", description = "Error in stop consumer",
                     content = @Content) })
     @GetMapping(path = "scntt/consumer/stop")
-    public ResponseEntity<String> stopConsumer(){
+    public ResponseEntity<StatusResponse> stopConsumer(){
         MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(listenerId);
          if(listenerContainer.isRunning()) {
             listenerContainer.stop();
              log.info("consumer stoppeed :: exit");
-             return new ResponseEntity<>("CONSUMER STOPPED", HttpStatus.OK);
+             return new ResponseEntity<>(new StatusResponse("CONSUMER STOPPED", new Date()), HttpStatus.OK);
         }else {
             log.info("consumer already stopped :: exit");
-             return new ResponseEntity<>("CONSUMER ALREADY STOPPED", HttpStatus.OK);
+            return  new ResponseEntity<>(new StatusResponse(" CONSUMER ALREADY STOPPED", new Date()), HttpStatus.OK);
         }
 
     }
@@ -109,14 +105,14 @@ public class ConsumerResource {
             @ApiResponse(responseCode = "500", description = "Error in status consumer",
                     content = @Content) })
     @GetMapping(path = "scntt/consumer/status")
-    public ResponseEntity<String> statusConsumer(){
+    public ResponseEntity<StatusResponse> statusConsumer(){
         MessageListenerContainer listenerContainer = kafkaListenerEndpointRegistry.getListenerContainer(listenerId);
         if(listenerContainer.isRunning()) {
             log.info("consumer status running :: exit");
-            return new ResponseEntity<>("RUNNING", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusResponse("CONSUMER RUNNING", new Date()), HttpStatus.OK);
         }else {
             log.info("consumer status not running :: exit");
-            return new ResponseEntity<>("NOT RUNNING", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusResponse("CONSUMER NOT RUNNING", new Date()), HttpStatus.OK);
 
         }
 
