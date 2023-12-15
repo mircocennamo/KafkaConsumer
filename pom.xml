@@ -147,10 +147,6 @@
             <version>${hazelcast.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.zipkin.reporter2</groupId>
-            <artifactId>zipkin-sender-kafka</artifactId>
-        </dependency>
-        <dependency>
             <groupId>it.nsis</groupId>
             <artifactId>SCNTT-Common</artifactId>
             <version>1.0-SNAPSHOT</version>

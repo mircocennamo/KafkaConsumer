@@ -32,7 +32,7 @@ public class ConsumerResource {
     String listenerId;
 
     @Autowired
-    private it.nsis.consumer.kakfa.service.MessageService messageService;
+    private it.nsis.consumer.service.MessageService messageService;
 
     @Autowired
     public KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;

@@ -1,8 +1,8 @@
-package it.nsis.consumer.kakfa.listenerBatch;
+package it.nsis.consumer.listenerBatch;
 
 import brave.Span;
 import brave.Tracer;
-import it.nsis.consumer.kakfa.service.MessageService;
+import it.nsis.consumer.service.MessageService;
 import it.nsis.model.Rilevazione;
 import io.micrometer.tracing.annotation.NewSpan;
 import it.nsis.utility.TagConst;
